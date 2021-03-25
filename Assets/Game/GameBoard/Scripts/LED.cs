@@ -7,13 +7,13 @@ public class LED : MonoBehaviour
 {
     [Header("Inspec")]
     [SerializeField]
-    private int _id;
-    [SerializeField]
     private bool _isOn = true;
 
     [Header("Reference")]
     [SerializeField]
-    private IntegerVariable _on;
+    private IntegerVariable _onNumber;
+    [SerializeField]
+    private IntegerVariable _offNumber;
 
     [Header("Runtime Reference")]
     [SerializeField]
@@ -43,19 +43,27 @@ public class LED : MonoBehaviour
         FlipNeighbors();
     }
 
-    public void Flip()
+    public void SetStatus(bool turnOn)
     {
-        _isOn = !_isOn;
+        _isOn = turnOn;
+
         _button.image.sprite = _isOn ? _onSprite : _offSprite;
 
         if (_isOn)
         {
-            _on.Value++;
+            _onNumber.Value++;
+            _offNumber.Value--;
         }
         else
         {
-            _on.Value--;
+            _onNumber.Value--;
+            _offNumber.Value++;
         }
+    }
+
+    public void Flip()
+    {
+        SetStatus(!_isOn);   
     }
 
     private void FlipNeighbors()

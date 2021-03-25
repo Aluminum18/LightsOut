@@ -72,9 +72,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89c86ef7e7f8574dbd0f171e08bede6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 0
   _isOn: 1
-  _on: {fileID: 11400000, guid: dc053727d1566cf4d819a7e9c395537c, type: 2}
+  _onNumber: {fileID: 11400000, guid: dc053727d1566cf4d819a7e9c395537c, type: 2}
+  _offNumber: {fileID: 11400000, guid: 78f71a929f53c354c891ee3636549b74, type: 2}
   _neighbors: []
   _onSprite: {fileID: 21300000, guid: d731561f278c3154686a68ab15e4100e, type: 3}
   _offSprite: {fileID: 21300000, guid: 75092d0573367844d8b2bdf2e44a3e77, type: 3}

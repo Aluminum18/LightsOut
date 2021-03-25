@@ -15,8 +15,7 @@ public class IntegerVariableEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
-        EditorGUILayout.PropertyField(_value);
+        DrawDefaultInspector();
 
         var myTarget = (IntegerVariable)target;
         myTarget.Value = _value.intValue;
