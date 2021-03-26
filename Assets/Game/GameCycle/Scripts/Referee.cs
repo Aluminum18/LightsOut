@@ -16,6 +16,11 @@ public class Referee : MonoBehaviour
     [SerializeField]
     private UnityEvent _onAllLightsOff;
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     private void TrackLightOnNumber(int number)
     {
         if (number > 0)
