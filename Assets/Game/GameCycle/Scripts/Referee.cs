@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,10 +32,7 @@ public class Referee : MonoBehaviour
 
     private void Start()
     {
-        Observable.TimerFrame(2).Subscribe(_ =>
-        {
-            _lightOn.OnValueChange += TrackLightOnNumber;
-        });
+        _lightOn.OnValueChange += TrackLightOnNumber;
     }
 
     private void OnDestroy()
