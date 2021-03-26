@@ -1010,7 +1010,19 @@ MonoBehaviour:
   _showFromStart: 0
   _onAllElementsShown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1154942476151493280}
+        m_TargetAssemblyTypeName: GameBoard, Assembly-CSharp
+        m_MethodName: RegisterCurrentOnOffToReferee
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onAllElementsHided:
     m_PersistentCalls:
       m_Calls: []
@@ -1066,10 +1078,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _size: 5
-  _lightOffRatio: 0.5
-  _generateTimeOut: 3
-  _gameMode: {fileID: 0}
+  _on: 0
+  _off: 0
+  _configGameMode: {fileID: 11400000, guid: 5a85d3b411d4f4a4e83cafdf90d1f0f9, type: 2}
   _offNumber: {fileID: 11400000, guid: 78f71a929f53c354c891ee3636549b74, type: 2}
+  _onNumber: {fileID: 11400000, guid: dc053727d1566cf4d819a7e9c395537c, type: 2}
+  _onRequestNewGame: {fileID: 11400000, guid: a04a4b4a97a01c648a6425eccd6d54fe, type: 2}
+  _onStartGenLights:
+    m_PersistentCalls:
+      m_Calls: []
+  _onFinishGenLights:
+    m_PersistentCalls:
+      m_Calls: []
+  _gameMode: 
+  _configLightOffRatio: 0.5
+  _generateTimeOut: 3
   _lights:
   - {fileID: 7179412246205596895}
   - {fileID: 7179412246793514305}

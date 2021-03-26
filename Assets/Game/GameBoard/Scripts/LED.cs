@@ -27,20 +27,16 @@ public class LED : MonoBehaviour
     [SerializeField]
     private Button _button;
 
+    private GameBoard _parrent;
+
+    public void SetParrent(GameBoard parrent)
+    {
+        _parrent = parrent;
+    }
+
     public void SetNeightbors(List<LED> neightbors)
     {
         _neighbors = neightbors;
-    }
-
-    public void RemoveNeighbor()
-    {
-        _neighbors.Clear();
-    }
-
-    public void Toggle()
-    {
-        Flip();
-        FlipNeighbors();
     }
 
     public void SetStatus(bool turnOn)
@@ -59,6 +55,19 @@ public class LED : MonoBehaviour
             _onNumber.Value--;
             _offNumber.Value++;
         }
+
+        NotifyToParrent(turnOn);
+    }
+
+    public void RemoveNeighbor()
+    {
+        _neighbors.Clear();
+    }
+
+    public void Toggle()
+    {
+        Flip();
+        FlipNeighbors();
     }
 
     public void Flip()
@@ -79,4 +88,8 @@ public class LED : MonoBehaviour
         }
     }
 
+    private void NotifyToParrent(bool isOn)
+    {
+        _parrent.UpdateLightStatus(isOn);
+    }
 }

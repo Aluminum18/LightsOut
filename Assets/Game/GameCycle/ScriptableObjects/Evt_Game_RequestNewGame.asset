@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 279f591f5444e2041af226c3a154283d, type: 3}
-  m_Name: Var_Board_LightOff
+  m_Script: {fileID: 11500000, guid: 7fab794d21cd6e74e9e5dcba1a0e01c1, type: 3}
+  m_Name: Evt_Game_RequestNewGame
   m_EditorClassIdentifier: 
-  _value: -109
-  _defaultValue: 0
-  _valueWhenInit: 1
+  _eventExplanation: 
+  _logWhenRaise: 0
+  _subcribers: []

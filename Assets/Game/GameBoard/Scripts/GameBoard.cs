@@ -9,50 +9,109 @@ public class GameBoard : MonoBehaviour
     [SerializeField]
     private int _size;
     [SerializeField]
-    [Range(0.1f, 1f)]
-    private float _lightOffRatio;
+    private int _on;
     [SerializeField]
-    private float _generateTimeOut;
+    private int _off;
 
     [Header("Reference")]
     [SerializeField]
-    private StringVariable _gameMode;
+    private IntegerVariable _offNumber; // Referee only relies on this value;
     [SerializeField]
-    private IntegerVariable _offNumber;
+    private IntegerVariable _onNumber; // Referee only relies on this value;
+
+    [Header("Events in")]
+    [SerializeField]
+    private GameEvent _onRequestNewGame;
 
     [Header("Unity Events")]
+    [SerializeField]
+    private UnityEvent _onStartGenLights;
     [SerializeField]
     private UnityEvent _onFinishGenLights;
 
     [Header("Config")]
     [SerializeField]
+    [Range(0.1f, 1f)]
+    private float _configLightOffRatio;
+    [SerializeField]
+    private float _generateTimeOut;
+    [SerializeField]
     private List<LED> _lights;
+
+    private UIPanel _uiPanel;
 
     public void SetupLights()
     {
         for (int i = 0; i < _lights.Count; i++)
         {
             var light = _lights[i];
+            light.SetParrent(this);
             light.SetNeightbors(FindNeighbors(i));
             light.SetStatus(true);
         }
+
+        _on = _lights.Count;
+        _off = 0;
+    }
+
+    public void RegisterCurrentOnOffToReferee()
+    {
+        _onNumber.Value = _on;
+        _offNumber.Value = _off;
     }
 
     public void GenerateLightsPattern()
     {
+        RegisterCurrentOnOffToReferee();
         StartCoroutine(IE_GenerateLightsPattern());
+    }
+
+    public void UpdateLightStatus(bool isOn)
+    {
+        if (!isOn)
+        {
+            _on--;
+            _off++;
+        }
+        else
+        {
+            _on++;
+            _off--;
+        }
+
+        if (_on > 0)
+        {
+            return;
+        }
+
+        ResetAllLights();
+    }
+
+    private void ResetAllLights()
+    {
+        for (int i = 0; i < _lights.Count; i++)
+        {
+            _lights[i].SetStatus(true);
+        }
     }
 
     private IEnumerator IE_GenerateLightsPattern()
     {
-        float lightOffRatio = 1;
+        _onStartGenLights.Invoke();
+
+        float lightOffRatio = 0;
         int lightIdx;
         float timeout = _generateTimeOut;
-        while (lightOffRatio > _lightOffRatio || timeout > 0f)
+        while (lightOffRatio < _configLightOffRatio)
         {
+            if (timeout < 0f)
+            {
+                break;
+            }
+
             lightIdx = Random.Range(0, _lights.Count);
             _lights[lightIdx].Toggle();
-            lightOffRatio = _offNumber.Value / _lights.Count;
+            lightOffRatio = _off / _lights.Count;
 
             timeout -= Time.deltaTime;
             yield return null;
@@ -94,14 +153,31 @@ public class GameBoard : MonoBehaviour
         return neighbors;
     }
 
+    private void HandleNewGameRequest(params object[] args)
+    {
+        if (!_uiPanel.IsOpening)
+        {
+            return;
+        }
+
+        GenerateLightsPattern();
+    }
+
     private void Awake()
     {
+        _uiPanel = GetComponent<UIPanel>();
         _size = (int)Mathf.Sqrt(_lights.Count);
+        _onRequestNewGame.Subcribe(HandleNewGameRequest);
     }
 
     private void Start()
     {
         SetupLights();
+    }
+
+    private void OnDestroy()
+    {
+        _onRequestNewGame.Unsubcribe(HandleNewGameRequest);
     }
 
 #if UNITY_EDITOR
